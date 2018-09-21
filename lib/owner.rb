@@ -1,7 +1,7 @@
 require 'pry'
 
 class Owner
-  
+
   attr_accessor :say_species, :name, :pets
   attr_reader :species
 
@@ -80,7 +80,6 @@ class Owner
 
   def list_pets
     sentence = "I have "
-    pets_array = @pets.keys
 
     # returns number of each type of pet
     fish_count = @pets[:fishes].count
