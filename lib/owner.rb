@@ -7,6 +7,8 @@ require 'pry'
 
       def initialize(species)
         @species = species
+        @pets = {:fishes=>[], :cats=>[], :dogs=>[]}
+
         @@all << self
       end
 
@@ -23,27 +25,23 @@ require 'pry'
      end
 
     def say_species
-      puts "I am a #{@species}."
+      return "I am a #{species}."
     end
-
-   def pets
-     @pets = {:fishes=>[], :cats=>[], :dogs=>[]}
-   end
 
   def buy_fish(fish)
      @pets[:fishes] << Fish.new(fish)
    end
 
   def buy_cat(cat)
-    @pets[:cat] << Cat.new(cat)
+    @pets[:cats] << Cat.new(cat)
   end
 
   def buy_dog(dog)
-    @pets[:dog] << Dog.new(dog)
+    @pets[:dogs] << Dog.new(dog)
   end
 
   def walk_dogs
-    @pets[:dog].each do |dog|
+    @pets[:dogs].each do |dog|
       dog.mood = "happy"
     end
   end
@@ -55,19 +53,22 @@ require 'pry'
   end
 
   def feed_fish
-    @pets[:fish].each do |fish|
+    @pets[:fishes].each do |fish|
       fish.mood = "happy"
     end
   end
 
-
   def sell_pets
-    @pets.each do |pet|
-      pet.mood = "happy"
+    @pets.each do |pet, attribute|
+      attribute.each do |pet|
+         pet.mood = "nervous"
+      end
+       pets[pet]= Array.new
     end
   end
 
   def list_pets
-    
+   return "I have #{@pets[:fishes].count} fish, #{@pets[:dogs].count} dog(s), and #{@pets[:cats].count} cat(s)."
   end
+
 end
