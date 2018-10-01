@@ -1,3 +1,13 @@
 class Fish
-  # code goes here
-end
+    attr_reader :name
+    attr_accessor :mood
+
+  def initialize(name)
+    @name = name
+    @mood = "nervous"
+  end
+
+
+  end
+
+  goldie = Fish.new("goldie")
