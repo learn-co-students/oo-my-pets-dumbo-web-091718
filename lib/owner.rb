@@ -1,89 +1,77 @@
+require "pry"
+
 class Owner
   # code goes here
-  attr_accessor :name
-
+  attr_reader :species
+  attr_accessor :name, :pets
+  
   @@all = []
-
+  
   def initialize(name)
     @name = name
+    @species = "human"
     @pets = {
       :fishes => [],
       :dogs => [],
       :cats => []
     }
+    
     @@all << self
   end
-
+  
   def self.all
     @@all
   end
-
+  
   def self.reset_all
-    @@all = []
+    @@all.clear
   end
-
+  
   def self.count
-    @@all.count
+    @@all.length
   end
-
-  def species
-    @species = "human"
-  end
-
+  
   def say_species
-    return "I am a #{species}."
+    return "I am a human."
   end
-
-  def pets
-    @pets
-  end
-
-  def pets=(pets)
-    @pets = pets
-  end
-
+  
   def buy_fish(fish)
-    new_fish = Fish.new(fish)
-    self.pets[:fishes] << new_fish
+    pet = Fish.new(fish)
+    pet.owner = self
+    self.pets[:fishes] << pet
   end
-
+  
   def buy_cat(cat)
-    new_cat = Cat.new(cat)
-    self.pets[:cats] << new_cat
+    pet = Cat.new(cat)
+    pet.owner = self
+    self.pets[:cats] << pet
   end
-
+  
   def buy_dog(dog)
-    new_dog = Dog.new(dog)
-    self.pets[:dogs] << new_dog
+    pet = Dog.new(dog)
+    pet.owner = self
+    self.pets[:dogs] << pet
   end
-
+  
   def walk_dogs
-    self.pets[:dogs].each do |dog|
-      dog.mood = "happy"
-    end
+    self.pets[:dogs].each {|dog| dog.mood = "happy"}
   end
-
+  
   def play_with_cats
-    self.pets[:cats].each do |cat|
-      cat.mood = "happy"
-    end
+    self.pets[:cats].each {|cat| cat.mood = "happy"}
   end
-
+  
   def feed_fish
-    self.pets[:fishes].each do |fish|
-      fish.mood = "happy"
-    end
+    self.pets[:fishes].each {|fish| fish.mood = "happy"}
   end
-
+  
   def sell_pets
-    self.pets.each do |key, value|
-      value.each do |k, v|
-        k.mood = "nervous"
-      end
+    self.pets.each do |k, v|
+      v.each {|pet| pet.mood = "nervous"}
+      v.clear
     end
-    @pets = {}
   end
-
+  
   def list_pets
     return "I have #{self.pets[:fishes].count} fish, #{self.pets[:dogs].count} dog(s), and #{self.pets[:cats].count} cat(s)."
   end
